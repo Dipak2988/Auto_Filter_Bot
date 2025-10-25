@@ -59,7 +59,7 @@ auth_channels     = environ.get("AUTH_CHANNELS", "-1002245762167 -1001964648589"
 # ============================
 # Payment Configuration
 # ============================
-QR_CODE = environ.get('QR_CODE', 'https://envs.sh/ZrU.jpg')    # QR code image for payments
+QR_CODE = environ.get('QR_CODE', 'https://te.legra.ph/file/c6212e4620377c24e3568-cf5455e6eea3ecffc6.jpg')    # QR code image for payments
 OWNER_UPI_ID = environ.get('OWNER_UPI_ID', 'dss.dss@freecharge')    # Owner UPI ID for payments
 
 STAR_PREMIUM_PLANS = {
