@@ -105,8 +105,8 @@ TUTORIAL_2 = environ.get("TUTORIAL_2", "https://t.me/HowToDownloadMovie2023")   
 TUTORIAL_3 = environ.get("TUTORIAL_3", "https://t.me/HowToDownloadMovie2023")   # Third tutorial link for verification
 
 # Verification (Must Fill All Veriables. Else You Got Error
-SHORTENER_API = environ.get("SHORTENER_API", "af777892f2d5912013a05ac2f488eba04084b84e") # Shortener API key
-SHORTENER_WEBSITE = environ.get("SHORTENER_WEBSITE", "arolinks.com") # Shortener website
+SHORTENER_API = environ.get("SHORTENER_API", "00f526aae924309d5f31961906b46df8d3310bc3") # Shortener API key
+SHORTENER_WEBSITE = environ.get("SHORTENER_WEBSITE", "bongurl.in") # Shortener website
 
 SHORTENER_API2 = environ.get("SHORTENER_API2", "00f526aae924309d5f31961906b46df8d3310bc3")  # Shortener API key for second website
 SHORTENER_WEBSITE2 = environ.get("SHORTENER_WEBSITE2", "bongurl.in") # Shortener website for second website
