@@ -108,8 +108,8 @@ TUTORIAL_3 = environ.get("TUTORIAL_3", "https://t.me/HowToDownloadMovie2023")   
 SHORTENER_API = environ.get("SHORTENER_API", "af777892f2d5912013a05ac2f488eba04084b84e") # Shortener API key
 SHORTENER_WEBSITE = environ.get("SHORTENER_WEBSITE", "arolinks.com") # Shortener website
 
-SHORTENER_API2 = environ.get("SHORTENER_API2", "af777892f2d5912013a05ac2f488eba04084b84e")  # Shortener API key for second website
-SHORTENER_WEBSITE2 = environ.get("SHORTENER_WEBSITE2", "arolinks.com") # Shortener website for second website
+SHORTENER_API2 = environ.get("SHORTENER_API2", "f26e93fcf233135a793323cf8172a355a0a5a151")  # Shortener API key for second website
+SHORTENER_WEBSITE2 = environ.get("SHORTENER_WEBSITE2", "nowshort.com") # Shortener website for second website
 
 SHORTENER_API3 = environ.get("SHORTENER_API3", "00f526aae924309d5f31961906b46df8d3310bc3")  
 SHORTENER_WEBSITE3 = environ.get("SHORTENER_WEBSITE3", "bongurl.in") # Shortener website for third website
