@@ -1279,7 +1279,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     photo="https://i.ibb.co/0jC8MSDZ/photo-2025-07-26-10-42-36-7531339283701956616.jpg",
                     caption=(
                         "<b>🥳 ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴꜱ\n\n"
-                        "🎉 ʏᴏᴜ ᴄᴀɴ ᴜsᴇ ꜰʀᴇᴇ ᴛʀᴀɪʟ ꜰᴏʀ <u>5 ᴍɪɴᴜᴛᴇs</u> ꜰʀᴏᴍ ɴᴏᴡ !\n\n"
+                        "🎉 ʏᴏᴜ ᴄᴀɴ ᴜsᴇ ꜰʀᴇᴇ ᴛʀɪᴀʟ ꜰᴏʀ <u>5 ᴍɪɴᴜᴛᴇs</u> ꜰʀᴏᴍ ɴᴏᴡ !\n\n"
                         "ɴᴇᴇᴅ ᴘʀᴇᴍɪᴜᴍ 👉🏻 /plan</b>"
                     ),
                     parse_mode=enums.ParseMode.HTML,
@@ -1405,34 +1405,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
         dreamx = await client.get_chat(int(grp_id))
         await query.message.edit(text=await get_settings_text(grp_id, dreamx.title), reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
 
-    elif query.data.startswith("removegrp"):
-        user_id = query.from_user.id
-        data = query.data
-        grp_id = int(data.split("#")[1])
-        if not await is_check_admin(client, grp_id, query.from_user.id):
-            return await query.answer(script.NT_ADMIN_ALRT_TXT, show_alert=True)
-        await db.remove_group_connection(grp_id, user_id)
-        await query.answer("Group removed from your connections.", show_alert=True)
-        connected_groups = await db.get_connected_grps(user_id)
-        if not connected_groups:
-            await query.edit_message_text("Nᴏ Cᴏɴɴᴇᴄᴛᴇᴅ Gʀᴏᴜᴘs Fᴏᴜɴᴅ .")
-            return
-        group_list = []
-        for group in connected_groups:
-            try:
-                Chat = await client.get_chat(group)
-                group_list.append([
-                    InlineKeyboardButton(
-                        text=Chat.title, callback_data=f"grp_pm#{Chat.id}")
-                ])
-            except Exception:
-                pass
-        await query.edit_message_text(
-            "⚠️ ꜱᴇʟᴇᴄᴛ ᴛʜᴇ ɢʀᴏᴜᴘ ᴡʜᴏꜱᴇ ꜱᴇᴛᴛɪɴɢꜱ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄʜᴀɴɢᴇ.\n\n"
-            "ɪꜰ ʏᴏᴜʀ ɢʀᴏᴜᴘ ɪꜱ ɴᴏᴛ ꜱʜᴏᴡɪɴɢ ʜᴇʀᴇ,\n"
-            "ᴜꜱᴇ /reload ɪɴ ᴛʜᴀᴛ ɢʀᴏᴜᴘ ᴀɴᴅ ɪᴛ ᴡɪʟʟ ᴀᴘᴘᴇᴀʀ ʜᴇʀᴇ.",
-            reply_markup=InlineKeyboardMarkup(group_list)
-        )
 
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")
