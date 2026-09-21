@@ -70,7 +70,7 @@ async def handle_log_channel_menu(client, query):
 
     btn = [[
         InlineKeyboardButton('ᴄʜᴀɴɢᴇ ʟᴏɢ', callback_data=f'changelog#{grp_id}'),
-        InlineKeyboardButton('ʀᴇᴍᴏᴠᴇ ʟᴏɢ', callback_data=f'removelog#{grp_id}', style=enums.ButtonStyle.DANGER),  # type: ignore
+        InlineKeyboardButton('ʀᴇᴍᴏᴠᴇ ʟᴏɢ', callback_data=f'removelog#{grp_id}', style=enums.ButtonStyle.DANGER),
     ],[
         InlineKeyboardButton('⇋ ʙᴀᴄᴋ ⇋', callback_data=f'grp_pm#{grp_id}')
     ]]
@@ -107,7 +107,7 @@ async def handle_forcesub_menu(client, query):
 
     btn = [[
         InlineKeyboardButton('ꜱᴇᴛ ꜰꜱᴜʙ', callback_data=f'set_fsub_ui#{grp_id}'),
-        InlineKeyboardButton('ʀᴇᴍᴏᴠᴇ ꜰꜱᴜʙ', callback_data=f'remove_fsub_ui#{grp_id}', style=enums.ButtonStyle.DANGER),  # type: ignore
+        InlineKeyboardButton('ʀᴇᴍᴏᴠᴇ ꜰꜱᴜʙ', callback_data=f'remove_fsub_ui#{grp_id}', style=enums.ButtonStyle.DANGER),
     ],[
         InlineKeyboardButton('⇋ ʙᴀᴄᴋ ⇋', callback_data=f'grp_pm#{grp_id}')
     ]]
@@ -166,6 +166,7 @@ async def remove_log(client, query):
         return await query.answer("ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ✅.", show_alert=True)
     await delete_group_setting(int(grp_id), 'log')
     await query.answer("ʟᴏɢ ᴄʜᴀɴɴᴇʟ ʀᴇᴍᴏᴠᴇᴅ!", show_alert=True)
+    query.data = f'log_setgs#{grp_id}'
     await handle_log_channel_menu(client, query)
 
 @Client.on_callback_query(filters.regex(r'^set_fsub_ui'))
@@ -240,6 +241,7 @@ async def remove_fsub_ui(client, query):
         return await query.answer("ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ✅.", show_alert=True)
      await delete_group_setting(int(grp_id), 'fsub_id')
      await query.answer("ꜰᴏʀᴄᴇ ꜱᴜʙ ʀᴇᴍᴏᴠᴇᴅ!", show_alert=True)
+     query.data = f'fsub_setgs#{grp_id}'
      await handle_forcesub_menu(client, query)
 
 @Client.on_callback_query(filters.regex(r'^changelog'))
@@ -309,8 +311,7 @@ async def remove_caption(client, query):
         return await query.answer("ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ✅.", show_alert=True)
     await delete_group_setting(int(grp_id), 'caption')
     await query.answer("ᴄᴀᴘᴛɪᴏɴ ʀᴇᴍᴏᴠᴇᴅ!", show_alert=True)
-
-    # Redirect back to caption settings
+    query.data = f'caption_setgs#{grp_id}'
     await handle_custom_caption_menu(client, query)
 
 @Client.on_callback_query(filters.regex(r'^changecaption'))
@@ -556,10 +557,10 @@ async def time_menu_handler(client, query):
         [InlineKeyboardButton('⇋ ʙᴀᴄᴋ ⇋', callback_data=f'changetime#{grp_id}')]
     ]
     try:
-        await query.message.edit(f"<b>⏰ Time {num} Settings:</b>\n\n⏱️ Value: {val or 'Not Set'}", reply_markup=InlineKeyboardMarkup(btn))
+        await query.message.edit(f"<b>⏰ ᴛɪᴍᴇ {num} ꜱᴇᴛᴛɪɴɢꜱ:</b>\n\n⏱️ ᴠᴀʟᴜᴇ: {val or 'ɴᴏᴛ ꜱᴇᴛ'}", reply_markup=InlineKeyboardMarkup(btn))
     except FloodWait as fw:
         await asyncio.sleep(fw.value)
-        await query.message.edit(f"<b>⏰ Time {num} Settings:</b>\n\n⏱️ Value: {val or 'Not Set'}", reply_markup=InlineKeyboardMarkup(btn))
+        await query.message.edit(f"<b>⏰ ᴛɪᴍᴇ {num} ꜱᴇᴛᴛɪɴɢꜱ:</b>\n\n⏱️ ᴠᴀʟᴜᴇ: {val or 'ɴᴏᴛ ꜱᴇᴛ'}", reply_markup=InlineKeyboardMarkup(btn))
     except MessageNotModified:
         pass
 
@@ -601,7 +602,7 @@ async def set_time(client, query):
     else:
         return await query.answer("Invalid Time Selection")
 
-    current_time = settings.get(key, 'Not set')
+    current_time = settings.get(key, 'ɴᴏᴛ ꜱᴇᴛ')
     query.data = f'time_menu#{time_num}#{grp_id}'
 
     try:
@@ -685,10 +686,10 @@ async def tutorial_menu_handler(client, query):
         [InlineKeyboardButton('⇋ ʙᴀᴄᴋ ⇋', callback_data=f'changetutorial#{grp_id}')]
     ]
     try:
-        await query.message.edit(f"<b>📹 Tutorial {num} Settings:</b>\n\n🔗 Value: {val or 'Not Set'}", reply_markup=InlineKeyboardMarkup(btn))
+        await query.message.edit(f"<b>📹 ᴛᴜᴛᴏʀɪᴀʟ {num} ꜱᴇᴛᴛɪɴɢꜱ:</b>\n\n🔗 ᴠᴀʟᴜᴇ: {val or 'ɴᴏᴛ ꜱᴇᴛ'}", reply_markup=InlineKeyboardMarkup(btn))
     except FloodWait as fw:
         await asyncio.sleep(fw.value)
-        await query.message.edit(f"<b>📹 Tutorial {num} Settings:</b>\n\n🔗 Value: {val or 'Not Set'}", reply_markup=InlineKeyboardMarkup(btn))
+        await query.message.edit(f"<b>📹 ᴛᴜᴛᴏʀɪᴀʟ {num} ꜱᴇᴛᴛɪɴɢꜱ:</b>\n\n🔗 ᴠᴀʟᴜᴇ: {val or 'ɴᴏᴛ ꜱᴇᴛ'}", reply_markup=InlineKeyboardMarkup(btn))
     except MessageNotModified:
         pass
 
