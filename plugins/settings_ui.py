@@ -3,7 +3,7 @@ import asyncio
 from pyrogram import Client, filters, enums
 from pyrogram.types import LinkPreviewOptions, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import MessageNotModified, FloodWait
-from info import IS_VERIFY, LOG_CHANNEL
+from info import IS_VERIFY, LOG_CHANNEL, CUSTOM_FILE_CAPTION
 from utils import get_settings, save_group_settings, delete_group_setting, is_check_admin
 from database.users_chats_db import db
 
@@ -134,12 +134,12 @@ async def handle_custom_caption_menu(client, query):
         return await query.answer("ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ✅.", show_alert=True)
 
     settings = await get_settings(int(grp_id))
-    caption = settings.get('caption')
+    caption = settings.get('caption', CUSTOM_FILE_CAPTION)
     caption_text = f"<code>{caption}</code>" if caption else "ɴᴏᴛ ꜱᴇᴛ"
 
     btn = [[
         InlineKeyboardButton('ᴄᴜꜱᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ', callback_data=f'changecaption#{grp_id}'),
-        InlineKeyboardButton('ʀᴇᴍᴏᴠᴇ ᴄᴀᴘᴛɪᴏɴ', callback_data=f'removecaption#{grp_id}', style=enums.ButtonStyle.DANGER),  # type: ignore
+        InlineKeyboardButton('ʀᴇᴍᴏᴠᴇ ᴄᴀᴘᴛɪᴏɴ', callback_data=f'removecaption#{grp_id}', style=enums.ButtonStyle.DANGER)
     ],[
         InlineKeyboardButton('⇋ ʙᴀᴄᴋ ⇋', callback_data=f'grp_pm#{grp_id}')
     ]]
@@ -774,7 +774,7 @@ async def prompt_group_deletion(client, query):
         buttons = [
             [
                 InlineKeyboardButton('ʏᴇs, ᴅᴇʟᴇᴛᴇ', callback_data=f'delete_group#{grp_id}', style=enums.ButtonStyle.DANGER),  
-                InlineKeyboardButton('ᴄᴀɴᴄᴇʟ', callback_data=f'open_settings#{grp_id}')
+                InlineKeyboardButton('ᴄᴀɴᴄᴇʟ', callback_data=f'grp_pm#{grp_id}')
             ]
         ]
         await query.message.edit_text(
