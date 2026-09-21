@@ -366,7 +366,6 @@ async def start(client, message):
                     if f_caption is None:
                         f_caption = f"{clean_filename(files1.file_name)}"
                     btn = await stream_buttons(message.from_user.id, file_id)
-                    btn = await stream_buttons(message.from_user.id, file_id)
                     msg = await client.send_cached_media(
                         chat_id=message.from_user.id,
                         file_id=file_id,
@@ -441,7 +440,6 @@ async def start(client, message):
                 pass
         if f_caption is None:
             f_caption = clean_filename(files.file_name)
-        btn = await stream_buttons(message.from_user.id, file_id)
         btn = await stream_buttons(message.from_user.id, file_id)
         msg = await client.send_cached_media(
             chat_id=message.from_user.id,
@@ -778,20 +776,10 @@ async def send_msg(bot, message):
         if len(parts) < 2:
             return await message.reply_text("<b>ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ ᴀꜱ ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴀɴʏ ᴍᴇꜱꜱᴀɢᴇ ᴜꜱɪɴɢ ᴛʜᴇ ᴛᴀʀɢᴇᴛ ᴄʜᴀᴛ ɪᴅ. ꜰᴏʀ ᴇɢ:  /send ᴜꜱᴇʀɪᴅ</b>")
         target_id = parts[1]
-        out = "Users Saved In DB Are:\n\n"
-        success = False
         try:
             user = await bot.get_users(target_id)
-            users = await db.get_all_users()
-            async for usr in users:
-                out += f"{usr['id']}"
-                out += '\n'
-            if str(user.id) in str(out):
+            if await db.is_user_exist(user.id):
                 await message.reply_to_message.copy(int(user.id))
-                success = True
-            else:
-                success = False
-            if success:
                 await message.reply_text(f"<b>ʏᴏᴜʀ ᴍᴇꜱꜱᴀɢᴇ ʜᴀꜱ ʙᴇᴇɴ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ꜱᴇɴᴛ ᴛᴏ {user.mention}.</b>")
             else:
                 await message.reply_text("<b>ᴛʜɪꜱ ᴜꜱᴇʀ ʜᴀꜱɴ'ᴛ ꜱᴛᴀʀᴛᴇᴅ ᴛʜɪꜱ ʙᴏᴛ ʏᴇᴛ !</b>")
